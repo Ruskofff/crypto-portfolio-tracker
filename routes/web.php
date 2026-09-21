@@ -1,10 +1,9 @@
 <?php
 
-use App\Http\Controllers\HoldingController;
-use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', PortfolioController::class)->name('portfolio.index');
-
-Route::resource('holdings', HoldingController::class)
-    ->only(['create', 'store', 'edit', 'update', 'destroy']);
+/*
+ * The whole interface is a React single page application. Laravel only serves
+ * the shell here; every piece of data it renders comes from routes/api.php.
+ */
+Route::view('/', 'app')->name('home');
