@@ -6,10 +6,43 @@ Une même cryptomonnaie peut être détenue sur plusieurs plateformes (ex. 0,1 B
 
 ## Stack
 
-- Laravel 13 / PHP 8.4
-- SQLite
-- Tailwind CSS 4 + Vite
+- **Back** : Laravel 13 / PHP 8.4, base SQLite
+- **Front** : React 19 (SPA), Tailwind CSS 4, Vite
 - Prix via l'API publique [CoinGecko](https://www.coingecko.com/en/api)
+
+L'interface est une **application React monopage**. Laravel ne sert qu'une coquille HTML (`resources/views/app.blade.php`) ; toutes les données affichées proviennent de l'API JSON décrite plus bas.
+
+## Architecture
+
+```
+resources/js/
+├── app.jsx              point d'entrée, monte React sur #app
+├── PortfolioApp.jsx     composant racine : état, chargement, CRUD
+├── api.js               client fetch de l'API Laravel
+├── format.js            formatage monnaies / quantités / dates (Intl)
+└── components/
+    ├── PortfolioTable.jsx
+    ├── HoldingForm.jsx
+    └── SummaryCards.jsx
+```
+
+Ce qui est **stocké** en base : les lignes du portefeuille (crypto, plateforme, quantité).
+Ce qui est **calculé à chaque requête** : les prix, les valeurs et les totaux — jamais persistés.
+
+## API
+
+| Méthode | Route | Rôle |
+|---|---|---|
+| `GET` | `/api/portfolio` | portefeuille valorisé, trié par valeur décroissante, avec totaux |
+| `GET` | `/api/holdings` | lignes stockées |
+| `POST` | `/api/holdings` | créer une ligne (201) |
+| `GET` | `/api/holdings/{id}` | une ligne |
+| `PUT` | `/api/holdings/{id}` | modifier (200) |
+| `DELETE` | `/api/holdings/{id}` | supprimer (204) |
+| `GET` | `/api/cryptocurrencies` | référentiel des cryptos |
+| `GET` | `/api/platforms` | référentiel des plateformes |
+
+Les erreurs de validation renvoient un **422** avec le détail par champ.
 
 ## Installation
 
