@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Database\Factories\PlatformFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\RouteKey;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -11,6 +13,9 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[RouteKey('slug')]
 class Platform extends Model
 {
+    /** @use HasFactory<PlatformFactory> */
+    use HasFactory;
+
     /**
      * The holdings stored on this platform.
      *
