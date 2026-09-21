@@ -82,6 +82,12 @@ return [
 
         'driver' => env('EXCHANGE_RATE_DRIVER', 'fixed'),
 
+        /*
+         * When the remote provider fails, fall back to the fixed rate below
+         * rather than letting the portfolio fail to render.
+         */
+        'fallback' => (bool) env('EXCHANGE_RATE_FALLBACK', true),
+
         'fixed' => (float) env('EXCHANGE_RATE_USD_EUR', 0.92),
 
         'cache_ttl' => (int) env('EXCHANGE_RATE_CACHE_TTL', 3600),
