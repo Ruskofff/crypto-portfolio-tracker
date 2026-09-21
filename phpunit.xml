@@ -29,6 +29,9 @@
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
+        <!-- No test may reach CoinGecko: simulated prices unless a test fakes the HTTP client itself. -->
+        <env name="PRICE_DRIVER" value="fake"/>
+        <env name="EXCHANGE_RATE_DRIVER" value="fixed"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
         <env name="NIGHTWATCH_ENABLED" value="false"/>
