@@ -2,10 +2,14 @@
 
 namespace App\Providers;
 
+use App\Contracts\ExchangeRateProvider;
 use App\Contracts\PriceProvider;
 use App\Services\Prices\CoinGeckoPriceProvider;
 use App\Services\Prices\FakePriceProvider;
 use App\Services\Prices\FallbackPriceProvider;
+use App\Services\Rates\FallbackExchangeRateProvider;
+use App\Services\Rates\FixedExchangeRateProvider;
+use App\Services\Rates\FrankfurterExchangeRateProvider;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -17,6 +21,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->registerPriceProvider();
+        $this->registerExchangeRateProvider();
     }
 
     /**
@@ -45,6 +50,27 @@ class AppServiceProvider extends ServiceProvider
             }
 
             return new FallbackPriceProvider($provider, $app->make(FakePriceProvider::class));
+        });
+    }
+
+    /**
+     * Resolve the exchange rate provider from `config/portfolio.php`, falling
+     * back to the configured fixed rate when the remote API is unavailable.
+     */
+    private function registerExchangeRateProvider(): void
+    {
+        $this->app->singleton(ExchangeRateProvider::class, function (Application $app): ExchangeRateProvider {
+            if (config('portfolio.exchange_rate.driver') === 'fixed') {
+                return $app->make(FixedExchangeRateProvider::class);
+            }
+
+            $provider = $app->make(FrankfurterExchangeRateProvider::class);
+
+            if (! config('portfolio.exchange_rate.fallback')) {
+                return $provider;
+            }
+
+            return new FallbackExchangeRateProvider($provider, $app->make(FixedExchangeRateProvider::class));
         });
     }
 }

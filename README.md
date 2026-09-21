@@ -47,6 +47,7 @@ Tous les réglages métier sont centralisés dans `config/portfolio.php` et pilo
 | Variable | Défaut | Rôle |
 |---|---|---|
 | `EXCHANGE_RATE_DRIVER` | `fixed` | `fixed` (taux configurable) ou `frankfurter` (taux du jour via API) |
+| `EXCHANGE_RATE_FALLBACK` | `true` | Bascule sur le taux fixe si l'API de taux est indisponible |
 | `EXCHANGE_RATE_USD_EUR` | `0.92` | Taux utilisé par le driver `fixed` |
 | `EXCHANGE_RATE_CACHE_TTL` | `3600` | Durée de cache du taux, en secondes |
 
