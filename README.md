@@ -79,9 +79,9 @@ Tous les réglages métier sont centralisés dans `config/portfolio.php` et pilo
 
 | Variable | Défaut | Rôle |
 |---|---|---|
-| `EXCHANGE_RATE_DRIVER` | `fixed` | `fixed` (taux configurable) ou `frankfurter` (taux du jour via API) |
-| `EXCHANGE_RATE_FALLBACK` | `true` | Bascule sur le taux fixe si l'API de taux est indisponible |
-| `EXCHANGE_RATE_USD_EUR` | `0.92` | Taux utilisé par le driver `fixed` |
+| `EXCHANGE_RATE_DRIVER` | `frankfurter` | `frankfurter` (taux du jour via API, par défaut) ou `fixed` (taux configurable) |
+| `EXCHANGE_RATE_FALLBACK` | `true` | Bascule sur le taux fixe si l'API Frankfurter est indisponible |
+| `EXCHANGE_RATE_USD_EUR` | `0.92` | Taux utilisé par le driver `fixed`, et par le repli quand Frankfurter échoue |
 | `EXCHANGE_RATE_CACHE_TTL` | `3600` | Durée de cache du taux, en secondes |
 
 > Les prix et le total sont recalculés **à chaque appel**, que ce soit sur la page web ou sur l'API. Le cache ne sert qu'à respecter les quotas des API externes.
