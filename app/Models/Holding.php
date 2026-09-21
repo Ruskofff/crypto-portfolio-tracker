@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Database\Factories\HoldingFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,6 +14,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[Fillable(['cryptocurrency_id', 'platform_id', 'quantity'])]
 class Holding extends Model
 {
+    /** @use HasFactory<HoldingFactory> */
+    use HasFactory;
+
     /**
      * Get the attributes that should be cast.
      *
