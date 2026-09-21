@@ -71,16 +71,18 @@ return [
     |--------------------------------------------------------------------------
     |
     | Controls how the base currency is converted to the quote currency. The
-    | "fixed" driver uses the configurable rate below, while "frankfurter"
-    | pulls daily reference rates from the free frankfurter.dev API.
+    | "frankfurter" driver pulls the daily reference rate from the free
+    | frankfurter.dev API, while "fixed" uses the configurable rate below.
+    | Frankfurter is the default so the portfolio reflects the real rate;
+    | fixed remains available as an explicit choice and as the fallback.
     |
-    | Supported: "fixed", "frankfurter"
+    | Supported: "frankfurter", "fixed"
     |
     */
 
     'exchange_rate' => [
 
-        'driver' => env('EXCHANGE_RATE_DRIVER', 'fixed'),
+        'driver' => env('EXCHANGE_RATE_DRIVER', 'frankfurter'),
 
         /*
          * When the remote provider fails, fall back to the fixed rate below
